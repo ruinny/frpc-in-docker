@@ -33,7 +33,7 @@ mkdir /var/frp && \
 mkdir /var/frp/conf && \
 cd /var/frp/conf && \
 wget https://raw.githubusercontent.com/ruinny/frpc-in-docker/master/frpc.ini && \
-chmod +x frps.ini
+chmod +x frpc.ini
 ```
 
 #### 根据需要修改配置文件
