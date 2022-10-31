@@ -42,8 +42,8 @@ chmod +x frpc.ini
 
 ## 启动镜像（docker run方式）
 ```bash
-docker run --name frpc --restart=always -d \
--v /var/frp/conf:/var/frp/conf \
+docker run --name frpc --restart=always -d --network host \
+-v /var/frp/conf/frpc.ini:/var/frp/conf/frpc.ini \
 ruiny/frpc
 ```
 
