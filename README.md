@@ -44,7 +44,6 @@ chmod +x frpc.ini
 ```bash
 docker run --name frpc --restart=always -d \
 -v /var/frp/conf:/var/frp/conf \
--p 15000-15100:15000-15100 -p 7000:7000 -p 7500:7500 -p 7001:7001 -p 7080:80 -p 7443:443 \
 ruiny/frpc
 ```
 
