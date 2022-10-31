@@ -1,22 +1,54 @@
-# frpc-in-docker
-运行在docker中的frpc
+# frpc-in-docker是什么
+利用Docker快速部署Frpc
 
-Dockerfile自动化构建
+> 更新时间 2022-10-29
 
-FROM alpine:3.8
- 
-MAINTAINER ruiny <anyzdm@gmail.com>
+# 使用说明
 
-ENV Frp_ver 0.21.0
+# 安装Docker
+```bash
+#国外机
+wget -qO- https://get.docker.com/ | sh 
 
-RUN wget --no-check-certificate https://github.com/fatedier/frp/releases/download/v${Frp_ver}/frp_${Frp_ver}_linux_amd64.tar.gz && \
-    tar -zxf frp_${Frp_ver}_linux_amd64.tar.gz && \
-    mkdir /var/frp && \
-    mkdir /var/frp/log && \
-    mv frp_${Frp_ver}_linux_amd64/* /var/frp && \
-    rm -rf frp_${Frp_ver}_linux_amd64.tar.gz 
-    
+#国内机
+curl -sSL https://get.daocloud.io/docker | sh 
+```
 
-WORKDIR /var/frp
 
-ENTRYPOINT ./frpc -c conf/frpc.ini
+# 抽取镜像
+```bash
+docker pull ruiny/frpc
+```
+
+frps的0.17.0和0.24.1两个版本和下个版本不兼容，如果需要可以pull这两个镜像，一般情况用上面这个命令就行
+```bash
+docker pull ruiny/frpc:0.24.1
+docker pull ruiny/frpc:0.17.0
+```
+
+## 添加frps.ini配置文件
+```bash
+rm -rf /var/frp && \
+mkdir /var/frp && \
+mkdir /var/frp/conf && \
+cd /var/frp/conf && \
+wget https://raw.githubusercontent.com/ruinny/frps-in-docker/master/frps.ini && \
+chmod +x frps.ini
+```
+
+#### 根据需要修改配置文件
+`nano /var/frp/conf/frpc.ini` 
+
+
+## 启动镜像（docker run方式）
+```bash
+docker run --name frpc --restart=always -d \
+-v /var/frp/conf:/var/frp/conf \
+-p 15000-15100:15000-15100 -p 7000:7000 -p 7500:7500 -p 7001:7001 -p 7080:80 -p 7443:443 \
+ruiny/frpc
+```
+
+> 说明
+ - 配置文件存放在/var/frp/conf
+ - 只适用于x64，不适用于arm
+
