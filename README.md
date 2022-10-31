@@ -32,7 +32,7 @@ rm -rf /var/frp && \
 mkdir /var/frp && \
 mkdir /var/frp/conf && \
 cd /var/frp/conf && \
-wget https://raw.githubusercontent.com/ruinny/frps-in-docker/master/frps.ini && \
+wget https://raw.githubusercontent.com/ruinny/frpc-in-docker/master/frpc.ini && \
 chmod +x frps.ini
 ```
 
